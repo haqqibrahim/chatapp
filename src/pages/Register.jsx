@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, storage, db } from "../Firebase";
@@ -9,7 +9,7 @@ import { doc, setDoc } from "firebase/firestore";
 import Add from "../img/addAvatar.png";
 
 const Register = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [err, setErr] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +34,8 @@ const Register = () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async function (
             downloadURL
           ) {
+            console.log('ok')
+            console.log(downloadURL);
             await updateProfile(res.user, {
               displayName,
               photoURL: downloadURL,
@@ -45,7 +47,7 @@ const Register = () => {
               photoURL: downloadURL,
             });
             await setDoc(doc(db, "usersChats", res.user.uid), {});
-            navigate("/")
+            navigate("/");
           });
         }
       );
